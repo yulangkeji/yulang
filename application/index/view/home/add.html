@@ -1,0 +1,72 @@
+{extend name='./common/layout'}
+
+{block name='mid'}
+<h3>新增首页设置</h3>
+<form id="data-form" method="post" action="{:url('Home/post_add')}">
+    <div class="box box-default">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>显示文件（图片或视频）<font color="red">*</font></label>
+                        <img id="show_img" class="img-responsive" style="height: 150px" src="" onerror="javascript:this.src='__ROOT__/static/img/default.jpg';" alt="缩略图">
+                        <input type="hidden" class="form-control" placeholder="" id="path" name="path">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>文件类型<font color="red">*</font></label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="type" value="0" checked>
+                                图片
+                            </label>
+                            <label>
+                                <input type="radio" name="type" value="1">
+                                视频
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>文件上传<font color="red">*</font></label>
+                        <input id="upload_button" name="upload_button" type="file" multiple="true">
+                        <div id="queue"></div>
+                        <br><a href="#" target="_blank" id="path_link"></a>
+                    </div>
+                    <div class="form-group">
+                        <label>文字描述</label>
+                        <textarea class="form-control" rows="3" placeholder="" name="desc"></textarea>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>点击跳转地址</label>
+                        <input type="text" class="form-control" placeholder="" name="btn_url">
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="__ROOT__/util.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        BindUploadifive($('#upload_button'), {}, function (file, data) {
+            $('#show_img').attr('src', '__ROOT__/upload/' + data);
+            $("#path_link").attr('href', '__ROOT__/upload/' + data)
+            $("#path_link").html('预览已上传文件')
+            $('#path').val(data);
+        });
+    });
+</script>
+{/block}

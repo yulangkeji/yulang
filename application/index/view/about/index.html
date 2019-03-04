@@ -1,0 +1,150 @@
+{extend name='./common/layout'}
+
+{block name='mid'}
+<h3>关于我们设置</h3>
+<form id="data-form" method="post" action="{:url('About/post')}">
+    <div class="box box-default">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2 class="page-header">
+                        公司简介
+                    </h2>
+                </div>
+                <!-- /.col -->
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>显示文件（图片或视频）<font color="red">*</font></label>
+                        <img id="profile_show_img" class="img-responsive" style="height: 150px" src="__ROOT__/upload/{$data['profile']['path']}" onerror="javascript:this.src='__ROOT__/static/img/default.jpg';" alt="缩略图">
+                        <input type="hidden" class="form-control" placeholder="" id="profile_path" name="profile_path" value="{$data['profile']['path']}">
+                    </div>
+
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>文件类型<font color="red">*</font></label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="profile_type" value="0" {$data['profile']['type'] == 0 ? 'checked' : ''}>
+                                图片
+                            </label>
+                            <label>
+                                <input type="radio" name="profile_type" value="1" {$data['profile']['type'] == 1 ? 'checked' : ''}>
+                                视频
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>文件上传<font color="red">*</font></label>
+                        <input id="profile_upload_button" class="upload_button" type="file" multiple="true" value="" />
+                        <div id="queue"></div>
+                        <br><a href="__ROOT__/upload/{$data['profile']['path']}" target="_blank" id="profile_path_link">预览已上传文件</a>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>公司简介描述</label>
+                        <textarea class="form-control" id="profile_editor" name="profile_content" rows="10" cols="80">{$data['profile']['content']}</textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+    </div>
+
+    <div class="box box-default">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2 class="page-header">
+                        企业文化
+                    </h2>
+                </div>
+                <!-- /.col -->
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>显示文件（图片或视频）<font color="red">*</font></label>
+                        <img id="culture_show_img" class="img-responsive" style="height: 150px" src="__ROOT__/upload/{$data['culture']['path']}" onerror="javascript:this.src='__ROOT__/static/img/default.jpg';" alt="缩略图">
+                        <input type="hidden" class="form-control" placeholder="" id="culture_path" name="culture_path" value="{$data['culture']['path']}">
+                    </div>
+
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>文件类型<font color="red">*</font></label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="culture_type" value="0" {$data['culture']['type'] == 0 ? 'checked' : ''}>
+                                图片
+                            </label>
+                            <label>
+                                <input type="radio" name="culture_type" value="1" {$data['culture']['type'] == 1 ? 'checked' : ''}>
+                                视频
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>文件上传<font color="red">*</font></label>
+                        <input id="culture_upload_button" class="upload_button" type="file" multiple="true" value="" />
+                        <div id="queue1"></div>
+                        <br><a href="__ROOT__/upload/{$data['culture']['path']}" target="_blank" id="culture_path_link">预览已上传文件</a>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>企业文化描述</label>
+                        <textarea class="form-control" id="culture_editor" name="culture_content" rows="10" cols="80">{$data['culture']['content']}</textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function () {
+        CKEDITOR.replace('profile_editor');
+        CKEDITOR.replace('culture_editor');
+        $('.textarea').wysihtml5();
+    });
+
+    $(document).ready(function(){
+        BindUploadifive($('#profile_upload_button'), {}, function (file, data) {
+            $('#profile_show_img').attr('src', '__ROOT__/upload/' + data);
+            $("#profile_path_link").attr('href', '__ROOT__/upload/' + data)
+            $("#profile_path_link").html('预览已上传文件')
+            $('#profile_path').val(data);
+        });
+        BindUploadifive($('#culture_upload_button'), {'queueID': 'queue1'}, function (file, data) {
+            $('#culture_show_img').attr('src', '__ROOT__/upload/' + data);
+            $("#culture_path_link").attr('href', '__ROOT__/upload/' + data)
+            $("#culture_path_link").html('预览已上传文件')
+            $('#culture_path').val(data);
+        });
+    });
+</script>
+{/block}

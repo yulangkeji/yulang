@@ -1,0 +1,88 @@
+{extend name='./common/layout'}
+
+{block name='mid'}
+<h3>新增项目设置</h3>
+<form id="data-form" method="post" action="{:url('Project/post_add')}">
+    <div class="box box-default">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>缩略图<font color="red">*</font></label>
+                        <img id="show_img" class="img-responsive" style="height: 150px" src="" onerror="javascript:this.src='__ROOT__/static/img/default.jpg';" alt="缩略图">
+                        <input type="hidden" class="form-control" placeholder="" id="img" name="img">
+                        <input type="hidden" class="form-control" placeholder="" id="path" name="path">
+                    </div>
+                    <div class="form-group">
+                        <label>缩略图上传<font color="red">*</font></label>
+                        <input id="img_upload_button" class="upload_button" type="file" multiple="true" value="" />
+                        <div id="queue"></div>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>项目名称</label>
+                        <input type="text" class="form-control" placeholder="" name="title">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>文件类型<font color="red">*</font></label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="type" value="0" checked>
+                                图片
+                            </label>
+                            <label>
+                                <input type="radio" name="type" value="1">
+                                视频
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                        <label>内容文件上传<font color="red">*</font></label>
+                        <input id="upload_button" class="upload_button" type="file" multiple="true" value="" />
+                        <div id="queue1"></div>
+                        <br><a href="" target="_blank" id="path_link"></a>
+                    </div>
+                    <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>文字描述</label>
+                        <textarea class="form-control" id="content" name="content" rows="10" cols="80"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function () {
+        CKEDITOR.replace('content');
+        $('.textarea').wysihtml5();
+    });
+
+    $(document).ready(function(){
+        BindUploadifive($('#img_upload_button'), {}, function (file, data) {
+            $('#show_img').attr('src', '__ROOT__/upload/' + data);
+            $('#img').val(data);
+        });
+        BindUploadifive($('#upload_button'), {'queueID': 'queue1'}, function (file, data) {
+            $("#path_link").attr('href', '__ROOT__/upload/' + data)
+            $("#path_link").html('预览已上传文件')
+            $('#path').val(data);
+        });
+    });
+</script>
+{/block}
