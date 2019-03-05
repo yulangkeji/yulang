@@ -6,6 +6,8 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Db;
+use think\Request;
 
 class Api extends Controller
 {
@@ -90,7 +92,7 @@ class Api extends Controller
      */
     public function project_api(Request $request){
         $get = $request->get();
-        $id = $get['id'];
+        $id = isset($get['id']) ? $get['id'] : 0 ;
         if(! empty($id)){
             $setting = Db::table('yl_project')->find($id);
             $settings = json_encode($setting);

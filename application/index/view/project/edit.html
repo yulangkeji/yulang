@@ -13,7 +13,7 @@
                         <img id="show_img" class="img-responsive" style="height: 150px" src="__ROOT__/upload/{$project['img']}" onerror="javascript:this.src='__ROOT__/static/img/default.jpg';" alt="缩略图">
                         <input type="hidden" name="id" value="{$project['id']}">
                         <input type="hidden" class="form-control" placeholder="" id="img" name="img" value="{$project['img']}">
-                        <input type="hidden" class="form-control" placeholder="" id="path" name="path" value="{$project['path']}">
+                        <!--<input type="hidden" class="form-control" placeholder="" id="path" name="path" value="{$project['path']}">-->
                     </div>
                     <div class="form-group">
                         <label>缩略图上传<font color="red">*</font></label>
@@ -24,7 +24,7 @@
                 <!-- /.col -->
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>项目名称</label>
+                        <label>项目名称<font color="red">*</font></label>
                         <input type="text" class="form-control" placeholder="" name="title" value="{$project['title']}">
                     </div>
                     <!-- /.form-group -->
@@ -43,10 +43,11 @@
                     </div>
                     <!-- /.form-group -->
                     <div class="form-group">
-                        <label>内容文件上传<font color="red">*</font></label>
-                        <input id="upload_button" class="upload_button" type="file" multiple="true" value="" />
-                        <div id="queue1"></div>
-                        <br><a href="/../upload/{$project['path']}" target="_blank" id="path_link">预览已上传文件</a>
+                        <label>内容文件地址<font color="red">*</font></label>
+                        <input type="text" class="form-control" placeholder="" name="path" value="{$project['path']}">
+                        <!--<input id="upload_button" class="upload_button" type="file" multiple="true" value="" />-->
+                        <!--<div id="queue1"></div>-->
+                        <!--<br><a href="/../upload/{$project['path']}" target="_blank" id="path_link">预览已上传文件</a>-->
                     </div>
                     <!-- /.form-group -->
                 </div>
@@ -79,11 +80,11 @@
             $('#show_img').attr('src', '__ROOT__/upload/' + data);
             $('#img').val(data);
         });
-        BindUploadifive($('#upload_button'), {'queueID': 'queue1'}, function (file, data) {
-            $("#path_link").attr('href', '__ROOT__/upload/' + data)
-            $("#path_link").html('预览已上传文件')
-            $('#path').val(data);
-        });
+        // BindUploadifive($('#upload_button'), {'queueID': 'queue1'}, function (file, data) {
+        //     $("#path_link").attr('href', '__ROOT__/upload/' + data)
+        //     $("#path_link").html('预览已上传文件')
+        //     $('#path').val(data);
+        // });
     });
 </script>
 {/block}

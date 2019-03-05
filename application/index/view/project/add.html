@@ -12,7 +12,7 @@
                         <label>缩略图<font color="red">*</font></label>
                         <img id="show_img" class="img-responsive" style="height: 150px" src="" onerror="javascript:this.src='__ROOT__/static/img/default.jpg';" alt="缩略图">
                         <input type="hidden" class="form-control" placeholder="" id="img" name="img">
-                        <input type="hidden" class="form-control" placeholder="" id="path" name="path">
+                        <!--<input type="hidden" class="form-control" placeholder="" id="path" name="path">-->
                     </div>
                     <div class="form-group">
                         <label>缩略图上传<font color="red">*</font></label>
@@ -23,7 +23,7 @@
                 <!-- /.col -->
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>项目名称</label>
+                        <label>项目名称<font color="red">*</font></label>
                         <input type="text" class="form-control" placeholder="" name="title">
                     </div>
                     <!-- /.form-group -->
@@ -31,21 +31,22 @@
                         <label>文件类型<font color="red">*</font></label>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="type" value="0" checked>
+                                <input type="radio" name="type" value="0" >
                                 图片
                             </label>
                             <label>
-                                <input type="radio" name="type" value="1">
+                                <input type="radio" name="type" value="1" checked>
                                 视频
                             </label>
                         </div>
                     </div>
                     <!-- /.form-group -->
                     <div class="form-group">
-                        <label>内容文件上传<font color="red">*</font></label>
-                        <input id="upload_button" class="upload_button" type="file" multiple="true" value="" />
-                        <div id="queue1"></div>
-                        <br><a href="" target="_blank" id="path_link"></a>
+                        <label>内容文件地址<font color="red">*</font></label>
+                        <input type="text" class="form-control" placeholder="" name="path">
+                        <!--<input id="upload_button" class="upload_button" type="file" multiple="true" value="" />-->
+                        <!--<div id="queue1"></div>-->
+                        <!--<br><a href="" target="_blank" id="path_link"></a>-->
                     </div>
                     <!-- /.form-group -->
                 </div>
@@ -78,11 +79,11 @@
             $('#show_img').attr('src', '__ROOT__/upload/' + data);
             $('#img').val(data);
         });
-        BindUploadifive($('#upload_button'), {'queueID': 'queue1'}, function (file, data) {
-            $("#path_link").attr('href', '__ROOT__/upload/' + data)
-            $("#path_link").html('预览已上传文件')
-            $('#path').val(data);
-        });
+        // BindUploadifive($('#upload_button'), {'queueID': 'queue1'}, function (file, data) {
+        //     $("#path_link").attr('href', '__ROOT__/upload/' + data)
+        //     $("#path_link").html('预览已上传文件')
+        //     $('#path').val(data);
+        // });
     });
 </script>
 {/block}

@@ -25,7 +25,7 @@
                     <tr>
                         <td><img id="show_img" class="img-responsive" style="height: 50px" src="__ROOT__/upload/{$project['img']}" onerror="javascript:this.src='__ROOT__/static/img/default.jpg';" alt="缩略图"></td>
                         <td>{$project['title']}</td>
-                        <td><a href="__ROOT__/upload/{$project['path']}" target="_blank" id="path_link">__ROOT__/upload/{$project['path']}</a></td>
+                        <td><a href="{$project['path']}" target="_blank" id="path_link">{$project['path']}</a></td>
                         <td>{$project['type'] === 0 ? '图片' : '视频'}</td>
                         <td>{$project['content']}</td>
                         <td>
