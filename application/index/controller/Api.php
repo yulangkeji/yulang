@@ -78,15 +78,26 @@ class Api extends Controller
      * 关于我们项目配置接口
      */
     public function about_api(){
-        $settings = $this->select_db('about');
-        echo $settings;
+        $settings = [];
+        $settings['profile'] = Db::table('yl_about')->where('name', 'profile')->find();
+        $settings['culture'] = Db::table('yl_about')->where('name', 'culture')->find();
+
+        echo json_encode($settings);
     }
 
     /**
      * 公司项目配置接口
      */
-    public function project_api(){
-        $settings = $this->select_db('project');
+    public function project_api(Request $request){
+        $get = $request->get();
+        $id = $get['id'];
+        if(! empty($id)){
+            $setting = Db::table('yl_project')->find($id);
+            $settings = json_encode($setting);
+        }
+        else{
+            $settings = $this->select_db('project');
+        }
         echo $settings;
     }
     
