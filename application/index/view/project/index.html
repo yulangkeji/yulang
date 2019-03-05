@@ -18,7 +18,6 @@
                         <th style="width: 30%">项目名称</th>
                         <th style="width: 10%">内容文件</th>
                         <th style="width: 10%">文件类型</th>
-                        <th style="width: 30%">描述</th>
                         <th style="width: 20%">操作</th>
                     </tr>
                     {foreach $projects as $project}
@@ -27,7 +26,6 @@
                         <td>{$project['title']}</td>
                         <td><a href="{$project['path']}" target="_blank" id="path_link">{$project['path']}</a></td>
                         <td>{$project['type'] === 0 ? '图片' : '视频'}</td>
-                        <td>{$project['content']}</td>
                         <td>
                             <a href="/public/index/project/edit?id={$project['id']}" class="btn btn-block btn-info btn-xs" style="width: 50px">修改</a>
                             <button type="button" style="width: 50px" class="btn btn-block btn-danger btn-xs delete-btn" data-id="{$project['id']}">删除</button>

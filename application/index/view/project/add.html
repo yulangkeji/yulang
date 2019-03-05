@@ -43,10 +43,12 @@
                     <!-- /.form-group -->
                     <div class="form-group">
                         <label>内容文件地址<font color="red">*</font></label>
-                        <input type="text" class="form-control" placeholder="" name="path">
-                        <!--<input id="upload_button" class="upload_button" type="file" multiple="true" value="" />-->
-                        <!--<div id="queue1"></div>-->
-                        <!--<br><a href="" target="_blank" id="path_link"></a>-->
+                        <div id="type_change_img">
+                            <input id="upload_button" class="upload_button" type="file" multiple="true" value="" />
+                            <div id="queue1"></div>
+                            <br><a href="" target="_blank" id="path_link"></a>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" name="path" id="path">
                     </div>
                     <!-- /.form-group -->
                 </div>
@@ -75,15 +77,31 @@
     });
 
     $(document).ready(function(){
+        $("input:radio[name='type']").change(function(){
+            var value = $(this).val();
+            if(value == 0){
+                $("#type_change_img").show();
+                $("#path").attr('readonly', true);
+            }
+            else{
+                $("#type_change_img").hide();
+                $("#path").attr('readonly', false);
+            }
+        });
+        $("input:radio[name='type']").change();
+    });
+
+
+    $(document).ready(function(){
         BindUploadifive($('#img_upload_button'), {}, function (file, data) {
             $('#show_img').attr('src', '__ROOT__/upload/' + data);
             $('#img').val(data);
         });
-        // BindUploadifive($('#upload_button'), {'queueID': 'queue1'}, function (file, data) {
-        //     $("#path_link").attr('href', '__ROOT__/upload/' + data)
-        //     $("#path_link").html('预览已上传文件')
-        //     $('#path').val(data);
-        // });
+        BindUploadifive($('#upload_button'), {'queueID': 'queue1'}, function (file, data) {
+            $("#path_link").attr('href', '__ROOT__/upload/' + data)
+            $("#path_link").html('预览已上传文件')
+            $('#path').val(data);
+        });
     });
 </script>
 {/block}
