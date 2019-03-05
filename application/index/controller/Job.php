@@ -7,7 +7,7 @@ namespace app\index\controller;
 
 use think\Controller;
 
-class Job extends Controller
+class Job extends Common
 {
     /**
      * 操作信息页面

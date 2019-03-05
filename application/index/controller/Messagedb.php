@@ -16,15 +16,28 @@ class Messagedb extends Controller
         if ($_POST)
         {
             $data = [
-                'name' => "驭浪2",
-                'phone' => "18888888888",
-                'centent' => "业务合作咨询",
+                'name' => $_POST["name"],
+                'phone' => $_POST["phone"],
+                'centent' => $_POST["centent"],
                 'create_time' => date("Y-m-d H:i:s")
             ];
             $add_msg = model('message')->insert($data);
+            
             if ($add_msg)
             {
-                echo "添加成功";
+                $data = [
+                    "msg" => "1"
+                ];
+                $js = json_encode($data);
+                echo $js;
+            }
+            else 
+            {
+                $data = [
+                    "msg" => "0"
+                ];
+                $js = json_encode($data);
+                return $js;
             }
         }
         

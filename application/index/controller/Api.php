@@ -6,11 +6,24 @@
 namespace app\index\controller;
 
 use think\Controller;
-use think\Db;
-use think\Request;
 
 class Api extends Controller
 {
+     /**
+     * 身份验证
+     */
+    public function _initialize(){
+        parent::_initialize();
+        //用户端key
+        $c_key = input("c_key");        
+        //服务端Key
+        $s_key = config("APP_KEY");
+        if ($c_key != $s_key)
+        {
+            echo "非法请求";
+            return ;
+        }
+    }
     /**
      * 公司动态分类接口
      * 返回全部数据
@@ -43,7 +56,7 @@ class Api extends Controller
         }
     }
     /**
-     * 查询招聘信息
+     * 
      * 查询全部招聘信息
      * 返回全部信息
      */
@@ -65,34 +78,23 @@ class Api extends Controller
      * 关于我们项目配置接口
      */
     public function about_api(){
-        $settings = [];
-        $settings['profile'] = Db::table('yl_about')->where('name', 'profile')->find();
-        $settings['culture'] = Db::table('yl_about')->where('name', 'culture')->find();
-
-        echo json_encode($settings);
+        $settings = $this->select_db('about');
+        echo $settings;
     }
 
     /**
      * 公司项目配置接口
      */
-    public function project_api(Request $request){
-        $get = $request->get();
-        $id = $get['id'];
-        if(! empty($id)){
-            $setting = Db::table('yl_project')->find($id);
-            $settings = json_encode($setting);
-        }
-        else{
-            $settings = $this->select_db('project');
-        }
+    public function project_api(){
+        $settings = $this->select_db('project');
         echo $settings;
     }
     
     /**
      * 查询数据库
-     * @param unknown $db_name
-     * @param unknown $where
-     * @param unknown $order
+     * @param unknown $db_name 数据表名称
+     * @param unknown $where where语法
+     * @param unknown $order 
      * @param unknown $limit
      */
     private function select_db($db_name = "", $where = "", $order = "", $limit = "")
@@ -111,9 +113,20 @@ class Api extends Controller
             $data = $data->limit($limit);
         }
         $data = $data->select();
-        $json = json_encode($data);
+        if ($data)
+        {
+            $json = json_encode($data);
+        }
+        else
+        {
+            $er = [
+                "msg"=>"数据查询失败！"
+            ];
+            $json = json_encode($er);
+        }
         
         return $json;
+        
     }
     
     

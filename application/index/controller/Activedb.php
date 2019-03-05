@@ -41,28 +41,19 @@ class Activedb extends Common
      */
     public function add_active_desc()
     {
-        //var_dump($_POST);
         if ($_POST)
         {
-            $thumbnail = $this->upload_base64($_POST["thumbnail"], $_POST["1thumbnail"]);
-            if ($thumbnail)
+            $data = [
+                "type_id" => $_POST["type_id"],
+                "img" => "\\upload\\".$_POST["image"],
+                "title" => $_POST["title"],
+                "date" => date("Y-m-d H:i:s"),
+                "content" => $_POST["editorValue"]
+            ];
+            $add_data = model('active')->insert($data);
+            if ($add_data)
             {
-                $data = [
-                    "type_id" => $_POST["type_id"],
-                    "img" => $thumbnail,
-                    "title" => $_POST["title"],
-                    "date" => date("Y-m-d H:i:s"),
-                    "content" => $_POST["editorValue"]
-                ];
-                $add_data = model('active')->insert($data);
-                if ($add_data)
-                {
-                    echo "添加成功";
-                }
-            }
-            else 
-            {
-                echo "不支持中文名称";
+                echo "<script>alert('添加成功');location.href='".$_SERVER["HTTP_REFERER"]."';</script>";;
             }
         }
 

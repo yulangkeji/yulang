@@ -9,7 +9,7 @@ namespace app\index\controller;
 
 use think\Controller;
 
-class Jobdb extends Controller
+class Jobdb extends Common
 {
     /**
      * 保存招聘信息

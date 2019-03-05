@@ -18,10 +18,6 @@ class Active extends Common
     {
         $data = $this->type_data();
         $this->assign("typelist", $data);
-        //$data2 = $this->active_content();
-        //$this->assign("actived", $data2);
-        //var_dump($data2);
-        //return $this->fetch();
         return view();
     }
     /**
@@ -38,8 +34,16 @@ class Active extends Common
      */
     public function active_content()
     {
-        $ac = model('active')->where('type_id', 1)->select();
-        //$json_data = json_encode($ac);
+        if ($_POST)
+        {
+            $type_id = $_POST["type_id"];
+            $ac = model('active')->where('type_id', $type_id)->order('id desc')->select();
+        }
+        else 
+        {
+            $ac = model('active')->order('id desc')->select();
+        }
+        
         return $ac;
     }
     
